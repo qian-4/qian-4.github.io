@@ -1,137 +1,180 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 - ACCESS DENIED</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>404 — 見つかりません (超汚い版)</title>
 <style>
-    body {
-        background:#000;
-        color:#00ff00;
-        font-family: 'Courier New', monospace;
-        margin:0;
-        height:100vh;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-    }
-    .terminal {
-        width:90%;
-        max-width:800px;
-        border:3px solid #00ff00;
-        padding:20px;
-        box-shadow:0 0 30px #00ff00;
-        background:rgba(0,0,0,0.95);
-    }
-    .header {
-        text-align:center;
-        margin-bottom:15px;
-        letter-spacing:2px;
-    }
-    .header span {
-        display:block;
-    }
-    .log {
-        height:260px;
-        overflow-y:auto;
-        margin-bottom:10px;
-        white-space:pre-wrap;
-    }
-    .line::before {
-        content: '> ';
-    }
-    .input-line {
-        display:flex;
-        align-items:center;
-    }
-    .prompt {
-        margin-right:5px;
-    }
-    input {
-        flex:1;
-        background:black;
-        color:#00ff00;
-        border:none;
-        outline:none;
-        font-family:inherit;
-        font-size:1em;
-    }
-    .blink {
-        animation: blink 1s step-start infinite;
-    }
-    @keyframes blink {
-        50% { opacity:0; }
-    }
+  /* 基本のうるささ */
+  html,body{height:100%;margin:0;font-family:"Comic Sans MS","Impact",sans-serif;background:
+    radial-gradient(circle at 10% 20%, rgba(255,0,0,0.12), transparent 12%),
+    repeating-linear-gradient(45deg, rgba(255,255,0,0.03) 0 8px, rgba(0,255,255,0.02) 8px 16px),
+    linear-gradient(120deg,#fff0f0,#f0fff0 30%,#f0f8ff 70%);
+  color:#111; overflow:hidden;}
+  /* デカデカフラッシュ404 */
+  .big404{
+    font-size:18vw;
+    text-align:center;
+    margin:4vh 0 0 0;
+    animation: rainbow 1.4s linear infinite;
+    text-shadow: 0 0 20px rgba(0,0,0,0.2);
+  }
+  @keyframes rainbow{
+    0%{color:#ff0055; filter: hue-rotate(0deg);}
+    25%{color:#00ccff; filter: hue-rotate(90deg);}
+    50%{color:#ffcc00; filter: hue-rotate(180deg);}
+    75%{color:#7fff00; filter: hue-rotate(270deg);}
+    100%{color:#ff0055; filter: hue-rotate(360deg);}
+  }
+
+  /* 無駄な矢印と説明（読みづらさ重視）*/
+  .desc{font-size:1.6rem;text-align:center;margin:8px 0 18px 0;background:linear-gradient(#fff6e6,#ffe6f2);display:inline-block;padding:8px 16px;border:6px double #ff00ff;}
+
+  /* 左右からスクロールする広告風 */
+  .marquee {
+    width:100%;
+    white-space:nowrap;
+    overflow:hidden;
+    box-sizing:border-box;
+    border-top:6px solid #000;
+    border-bottom:6px dashed #000;
+    background:linear-gradient(90deg,#fff,#f8fff8);
+  }
+  .marquee p{display:inline-block;padding:12px 2rem;animation: slide 8s linear infinite;font-weight:700;}
+  @keyframes slide{0%{transform:translateX(100%);}100%{transform:translateX(-100%);} }
+
+  /* 目障りなボタン類 */
+  .btn{
+    display:inline-block;
+    margin:10px;
+    padding:14px 26px;
+    font-size:1rem;
+    border:8px dashed #ffff00;
+    background:linear-gradient(90deg,#ff007f,#00ff80);
+    color:#001;
+    box-shadow:10px 10px 0 rgba(0,0,0,0.3);
+    text-decoration:none;
+  }
+
+  /* ポップアップ */
+  .popup {
+    position:fixed; left:10%; top:12%; width:80%; padding:20px; border:8px groove #ff3399; background:linear-gradient(#fff,#ffd1dc);
+    z-index:9999; box-shadow:0 0 120px rgba(0,0,0,0.6); animation: popin .5s ease;
+  }
+  @keyframes popin { from{ transform: scale(.6) } to{ transform: scale(1)} }
+
+  /* 右下のうるさいバッジ */
+  .badge{
+    position:fixed; right:12px; bottom:12px; width:200px; height:110px; padding:10px;
+    border-radius:12px; border:6px solid #00ffff; background:linear-gradient(135deg,#ffff66,#66ff66 40%,#66ccff);
+    box-shadow:0 0 30px rgba(255,0,255,0.2); z-index:9998;
+  }
+
+  /* 装飾的な波打つテキスト */
+  .wiggle { display:inline-block; animation: wiggle 1.2s ease-in-out infinite; transform-origin:center; }
+  @keyframes wiggle { 0%{transform:rotate(-6deg)}50%{transform:rotate(8deg)}100%{transform:rotate(-6deg)} }
+
+  /* 強制フォーカス（うるさい） */
+  :focus{ outline:6px solid #ff9900 !important; }
+
+  /* モバイルでちょっと調整 */
+  @media (max-width:600px){
+    .big404{font-size:24vw;}
+    .badge{display:none;}
+  }
 </style>
 </head>
 <body>
-<div class="terminal">
-    <div class="header">
-        <span>*** MILITARY NETWORK TERMINAL ***</span>
-        <span>SECURITY LEVEL: OMEGA</span>
-        <span>ERROR CODE: 404</span>
-    </div>
 
-    <div id="log" class="log">
-SYSTEM BOOT SEQUENCE COMPLETE
-AUTHORIZATION: FAILED
-TARGET RESOURCE: NOT FOUND
-
-AVAILABLE COMMANDS:
-- go-home
-- status
-- clear
-- help
-    </div>
-
-    <div class="input-line">
-        <span class="prompt">&gt;</span>
-        <input id="cmd" type="text" autofocus>
-        <span class="blink">█</span>
-    </div>
+<div class="marquee" aria-hidden="true">
+  <p>ERROR 404 • ページが消えた • 404 • 見つからない • ここで踊るな • 404</p>
 </div>
 
+<h1 class="big404">404</h1>
+
+<p style="text-align:center;margin:6px 0;">
+  <span class="desc">お探しのページはここじゃない。多分消えた。</span>
+</p>
+
+<div style="text-align:center; margin-top:8px;">
+  <a class="btn" href="/" onclick="return noisyGo(event)">ホームに戻る</a>
+  <a class="btn" href="javascript:history.back()">戻る（多分無効）</a>
+  <a class="btn" href="#report" onclick="document.getElementById('report').style.display='block'">不満を送る</a>
+</div>
+
+<!-- 右下うるさいバッジ -->
+<div class="badge" role="complementary" aria-label="うるさいバッジ">
+  <strong style="display:block;margin-bottom:6px;">特別なお知らせ</strong>
+  <p style="margin:0;font-weight:700;">あなたのページは見当たりません。驚きましたね。</p>
+</div>
+
+<!-- 強制ポップアップ -->
+<div class="popup" id="popup" style="display:block;">
+  <h2 style="margin-top:0;color:#cc00ff;">重要 — 404警告</h2>
+  <p>このページは紛失しました。修復中…かもしれません。自業自得かもしれません。</p>
+  <div style="text-align:right;">
+    <button class="btn" onclick="document.getElementById('popup').style.display='none'">閉じる</button>
+  </div>
+</div>
+
+<!-- フォーム（無意味） -->
+<div id="report" class="popup" style="display:none;">
+  <h3 style="margin-top:0;">不満報告フォーム</h3>
+  <form onsubmit="return fakeSend(event)">
+    <label>あなたの名前: <input type="text" name="name" placeholder="名無し"></label><br><br>
+    <label>不満: <br><textarea name="msg" rows="4" cols="60" placeholder="怒りをここに"></textarea></label><br><br>
+    <button class="btn" type="submit">送信（無駄）</button>
+  </form>
+  <div style="text-align:right;margin-top:8px;"><button class="btn" onclick="document.getElementById('report').style.display='none'">閉じる</button></div>
+</div>
+
+<footer style="position:fixed; left:0; bottom:0; width:100%; text-align:center; padding:10px; border-top:6px double #000; background:rgba(255,255,255,0.6);">
+  <span style="font-weight:bold;">(404)</span> — ページは行方不明です。 <span class="wiggle">💥</span>
+  <small style="display:block; font-size:.8rem; color:#444;">自動でトップへ戻るまで <span id="count">10</span> 秒…</small>
+</footer>
+
 <script>
-const input = document.getElementById('cmd');
-const log = document.getElementById('log');
+  // カウントダウンしてトップへ（勝手に戻す嫌がらせ）
+  let sec = 10;
+  const countEl = document.getElementById('count');
+  const t = setInterval(()=> {
+    sec--;
+    countEl.textContent = sec;
+    if(sec <= 0){ clearInterval(t); window.location.href = '/'; }
+  },1000);
 
-function write(text) {
-    log.textContent += '\n' + text;
-    log.scrollTop = log.scrollHeight;
-}
+  function noisyGo(e){
+    // 目障りアラート付きで移動
+    alert('ホームに戻ります。お疲れさま。');
+    // 実際はリンク先に飛ばす
+    return true;
+  }
 
-input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-        const cmd = input.value.trim();
-        write('> ' + cmd);
+  function fakeSend(e){
+    e.preventDefault();
+    const n = (e.target.name.value || '名無し');
+    alert(n + ' さん、感情は受け取りました（たぶん処理しません）。');
+    document.getElementById('report').style.display = 'none';
+    return false;
+  }
 
-        switch (cmd) {
-            case 'go-home':
-                write('EXECUTING REDIRECT...');
-                setTimeout(() => location.href = '/', 500);
-                break;
-            case 'status':
-                write('SYSTEM STATUS: DEGRADED');
-                write('NETWORK: OFFLINE');
-                write('USER CLEARANCE: NONE');
-                break;
-            case 'clear':
-                log.textContent = '';
-                break;
-            case 'help':
-                write('COMMAND LIST:');
-                write('go-home  : return to base');
-                write('status   : system diagnostics');
-                write('clear    : wipe terminal');
-                write('help     : display this list');
-                break;
-            default:
-                write('UNAUTHORIZED COMMAND');
-                write('SECURITY LOG UPDATED');
-        }
-        input.value = '';
+  // キーボードでページをさらに壊す
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'g'){
+      document.body.style.backgroundImage = 'linear-gradient(90deg, rgba(255,0,0,0.1), rgba(0,255,0,0.08)), repeating-linear-gradient(0deg,#fff 0 6px,#ff0 6px 12px)';
+      alert('背景グレードアップ。おめでとう。');
     }
-});
+    if(ev.key === 'r'){
+      // ランダム再表示の小イベント
+      const p = document.getElementById('popup');
+      p.style.display = 'block';
+      alert('ポップアップ再生：運が悪いだけです。');
+    }
+  });
+
+  // 目がチカチカ注意（視覚的に刺激があるので）
+  console.log('注意: このページは視覚的に刺激的です。必要なら即閉じてください。');
 </script>
+
 </body>
 </html>
